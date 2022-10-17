@@ -2,6 +2,9 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import { setupRouter } from "./router";
 import { setupStore } from "./store";
+import { setupPlugins } from "./plugins"
+import "element-plus/es/components/message/style/css";
+
 
 // 启动项目
 async function bootstrap() {
@@ -12,6 +15,10 @@ async function bootstrap() {
 
   // 全局vuex
   setupStore(app);
+
+  // 挂载全局组件
+  setupPlugins(app)
+  
 
   // 挂载vue
   app.mount("#app");
