@@ -1,9 +1,15 @@
+// windiCss
+import 'virtual:windi-base.css'
+import 'virtual:windi-components.css'
+import 'virtual:windi-utilities.css'
 import { createApp } from "vue";
 import App from "./App.vue";
 import { setupRouter } from "./router";
 import { setupStore } from "./store";
 import { setupPlugins } from "./plugins"
 import "element-plus/es/components/message/style/css";
+
+
 
 
 // 启动项目

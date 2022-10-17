@@ -6,6 +6,9 @@ import { resolve } from "path";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+
+// windiCss
+import WindiCSS from "vite-plugin-windicss";  // <==
 function pathResolve(dir: string) {
   return resolve(process.cwd(), ".", dir);
 }
@@ -13,7 +16,8 @@ function pathResolve(dir: string) {
 export default defineConfig({
   plugins: [
     vue(),
-
+    // windiCss
+    WindiCSS(),
     // 配置到插件中
     AutoImport({
       resolvers: [ElementPlusResolver()],
