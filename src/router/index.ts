@@ -1,3 +1,5 @@
+
+import type { App } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 // 配置路由
@@ -12,5 +14,6 @@ const router = createRouter({
   ],
 });
 
-
-export default router
+export function setupRouter(app: App<Element>) {
+  app.use(router);
+}

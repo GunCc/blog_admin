@@ -1,11 +1,16 @@
 <template>
     <div>
-        测试
+        当前vuex：{{store.state.AppStore.darkMode}}
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts" >
+import { useStore } from "vuex"
+const store = useStore();
+console.log(store)
+// console.log(store.commit)
 
+store.commit("SetDarkMode","dark")
 </script>
 
 <style lang="scss" scoped>
