@@ -1,4 +1,4 @@
-// windiCss
+// windiCss 引入 会有一些默认的样式
 import 'virtual:windi-base.css'
 import 'virtual:windi-components.css'
 import 'virtual:windi-utilities.css'

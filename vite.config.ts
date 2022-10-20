@@ -14,6 +14,7 @@ function pathResolve(dir: string) {
 }
 // https://vitejs.dev/config/
 export default defineConfig({
+  base:'/',
   plugins: [
     vue(),
     // windiCss
@@ -28,6 +29,10 @@ export default defineConfig({
   ],
   resolve: {
     alias: [
+      {
+        find: /\@\//,
+        replacement: pathResolve("src") + "/",
+      },
       {
         find: /\/@\//,
         replacement: pathResolve("src") + "/",
