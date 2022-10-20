@@ -3,6 +3,7 @@ import { unref, watch } from "vue";
 import { useStore } from "vuex";
 import { REDIRECT_NAME } from "@/router/constant";
 import { useGlobSetting } from "@/settings";
+// vue封装的一些函数
 import { useTitle as usePageTitle } from "@vueuse/core";
 // 设置标题
 export function useTitle() {
@@ -11,7 +12,6 @@ export function useTitle() {
   const { currentRoute } = useRouter();
 
   const store = useStore();
-  console.log(store);
   const pageTitle = usePageTitle();
   watch(
     [() => currentRoute.value.path, () => store.getters.getLocale],
