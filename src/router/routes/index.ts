@@ -33,4 +33,4 @@ export const RootRoute: AppRouteRecordRaw = {
   },
 };
 
-export const basicRoutes = [LoginRoute, ...asyncRoutes];
+export const basicRoutes = [LoginRoute, RootRoute, ...asyncRoutes];

@@ -3,9 +3,6 @@ import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
 
 // element plus 按需引入
-import AutoImport from "unplugin-auto-import/vite";
-import Components from "unplugin-vue-components/vite";
-import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
 // windiCss
 import WindiCSS from "vite-plugin-windicss";  // <==
@@ -19,13 +16,6 @@ export default defineConfig({
     vue(),
     // windiCss
     WindiCSS(),
-    // 配置到插件中
-    AutoImport({
-      resolvers: [ElementPlusResolver()],
-    }),
-    Components({
-      resolvers: [ElementPlusResolver()],
-    }),
   ],
   resolve: {
     alias: [

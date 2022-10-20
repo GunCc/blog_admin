@@ -1,6 +1,5 @@
 <template>
     <div>
-        <el-button>测试</el-button>
         当前vuex：{{store.state.AppStore.darkMode}}
     </div>
 </template>
