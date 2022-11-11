@@ -8,7 +8,7 @@ import { setupRouter } from "./router";
 import { setupStore } from "./store";
 import { setupPlugins } from "./plugins";
 import { registerGlobComp } from "./components/registerGlobComp";
-
+import 'ant-design-vue/dist/antd.css';
 // 启动项目
 async function bootstrap() {
   const app = createApp(App);

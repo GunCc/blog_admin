@@ -1,10 +1,12 @@
 <template>
-    <layout>
+    <layout style="min-height:100vh">
         <!-- 是否填满 -->
         <layout-header fixed v-if="false"></layout-header>
         <layout>
             <!--手机端 -->
-            <layout-sider></layout-sider>
+            <layout-sider>
+
+            </layout-sider>
             <layout>
                 <layout-multiple-header></layout-multiple-header>
                 <layout-main></layout-main>
