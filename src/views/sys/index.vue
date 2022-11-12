@@ -13,6 +13,6 @@ console.log(store)
 store.commit("SetDarkMode","dark")
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 
 </style>

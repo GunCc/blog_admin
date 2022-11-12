@@ -27,6 +27,6 @@ import LayoutMain from "./main/index.vue"
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 
 </style>

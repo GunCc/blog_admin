@@ -11,6 +11,6 @@ import { LayoutFooter } from "ant-design-vue"
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 
 </style>

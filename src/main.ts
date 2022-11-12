@@ -2,13 +2,16 @@
 import "virtual:windi-base.css";
 import "virtual:windi-components.css";
 import "virtual:windi-utilities.css";
+import '/@/design/index.less';
 import { createApp } from "vue";
 import App from "./App.vue";
 import { setupRouter } from "./router";
 import { setupStore } from "./store";
-import { setupPlugins } from "./plugins";
+import { setupI18n } from '/@/locales/setupI18n';
+
 import { registerGlobComp } from "./components/registerGlobComp";
-import 'ant-design-vue/dist/antd.css';
+import('ant-design-vue/es/style');
+
 // 启动项目
 async function bootstrap() {
   const app = createApp(App);
@@ -19,8 +22,10 @@ async function bootstrap() {
   // 全局vuex
   setupStore(app);
 
+  // 多语言配置
+  await setupI18n(app);
   // setupPlugins(app);
-  
+
   // 挂载全局组件
   registerGlobComp(app);
 

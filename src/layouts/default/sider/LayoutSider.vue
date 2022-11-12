@@ -34,7 +34,7 @@ const showClassSideBarRef = computed(() => {
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .logo {
     height: 32px;
     margin: 16px;

@@ -11,6 +11,6 @@ import Sider from "./LayoutSider.vue"
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 
 </style>
