@@ -1,3 +1,11 @@
+/*
+ * @Author: Mango 2859893460@qq.com
+ * @Date: 2022-10-22 14:14:56
+ * @LastEditors: Mango 2859893460@qq.com
+ * @LastEditTime: 2022-11-16 20:27:14
+ * @FilePath: \blog_admin\src\types\config.d.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import {
   ContentEnum,
   PermissionModeEnum,
@@ -58,6 +66,8 @@ export interface ProjectConfig {
   settingButtonPosition: SettingButtonPositionEnum;
   // 权限模式
   permissionMode: PermissionModeEnum;
+  // Session 过期时间
+  sessionTimeoutProcessing: SessionTimeoutProcessingEnum;
   // 灰色模式
   grayMode: boolean;
   // 弱色

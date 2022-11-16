@@ -1,12 +1,13 @@
 import { computed, unref } from "vue";
 import { useRouter } from "vue-router";
-import { useStore } from "vuex";
+import { create } from "@/store/index";
+
 
 // 满屏内容
 export const useFullContent = () => {
-  const store = useStore();
+  const store = create();
   const router = useRouter();
-  // 当前路由
+  // 当前路由 
   const { currentRoute } = router;
   const getFullContent = computed(() => {
     const route = unref(currentRoute);
@@ -15,6 +16,7 @@ export const useFullContent = () => {
     if (query && Reflect.has(query, "__full__")) {
       return true;
     }
-    return store
+    return store.getters.getProjectConfig.fullContent
   });
+  return { getFullContent }
 };

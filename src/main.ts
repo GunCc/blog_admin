@@ -10,11 +10,15 @@ import { setupStore } from "./store";
 import { setupI18n } from '/@/locales/setupI18n';
 
 import { registerGlobComp } from "./components/registerGlobComp";
+import { initAppConfigStore } from "./logics/initAppConfig";
 import('ant-design-vue/es/style');
 
 // 启动项目
 async function bootstrap() {
   const app = createApp(App);
+
+  // 初始化系统内部配置
+  initAppConfigStore();
 
   // 挂载路由
   setupRouter(app);

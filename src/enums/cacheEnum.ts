@@ -25,6 +25,9 @@ export const APP_SESSION_CACHE_KEY = "APP__SESSION__CACHE__"
 // 选项卡缓存
 export const MULTIPLE_TABS_KEY = "MULTIPLE__TABS__"
 
+// 黑色模式是否开启
+export const APP_DARK_MODE_KEY_ = "__APP__DARK__MODE__"
+
 
 export enum CacheTypeEnum {
   SESSION,

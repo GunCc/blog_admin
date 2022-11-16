@@ -9,7 +9,7 @@
             </layout-sider>
             <layout>
                 <layout-multiple-header></layout-multiple-header>
-                <layout-main></layout-main>
+                <layout-content></layout-content>
                 <layout-footer></layout-footer>
             </layout>
         </layout>
@@ -22,7 +22,7 @@ import LayoutSider from "./sider/index.vue"
 import LayoutHeader from "./header/index.vue"
 import LayoutMultipleHeader from "./header/MultipleHeader.vue"
 import LayoutFooter from "./footer/index.vue"
-import LayoutMain from "./main/index.vue"
+import LayoutContent from "./content/index.vue"
 
 
 </script>

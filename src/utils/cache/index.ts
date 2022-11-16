@@ -32,3 +32,11 @@ export const createLocalStorage = (options: Options = {}) => {
     timeout: DEFAULT_CACHE_TIME,
   });
 };
+
+
+export const createSessionStorage = (options: Options = {}) => {
+  return createStorage(sessionStorage, {
+    ...options,
+    timeout: DEFAULT_CACHE_TIME
+  })
+}
