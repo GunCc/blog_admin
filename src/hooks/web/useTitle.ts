@@ -2,7 +2,7 @@
  * @Author: Mango 2859893460@qq.com
  * @Date: 2022-10-22 14:14:56
  * @LastEditors: Mango 2859893460@qq.com
- * @LastEditTime: 2022-11-17 11:26:48
+ * @LastEditTime: 2022-11-17 14:27:42
  * @FilePath: \blog_admin\src\hooks\web\useTitle.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -21,8 +21,9 @@ export function useTitle() {
 
   const store = useStore();
   const pageTitle = usePageTitle();
+  console.log(store.getters)
   watch(
-    [() => currentRoute.value.path, () => store.getters.locale.getLocale],
+    [() => currentRoute.value.path, () => store.getters['LocaleStore/getLocale']],
     () => {
       const route = unref(currentRoute);
 

@@ -2,15 +2,7 @@
  * @Author: Mango 2859893460@qq.com
  * @Date: 2022-11-16 17:14:49
  * @LastEditors: Mango 2859893460@qq.com
- * @LastEditTime: 2022-11-17 14:19:35
- * @FilePath: \blog_admin\src\logics\initAppConfig.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-/*
- * @Author: Mango 2859893460@qq.com
- * @Date: 2022-11-16 17:14:49
- * @LastEditors: Mango 2859893460@qq.com
- * @LastEditTime: 2022-11-17 11:20:41
+ * @LastEditTime: 2022-11-17 14:27:53
  * @FilePath: \blog_admin\src\logics\initAppConfig.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -34,7 +26,7 @@ export function initAppConfigStore() {
 
     let projectConfig: ProjectConfig = Persistent.getLocal(PROJ_CFG_KEY) as ProjectConfig;
     projectConfig = deepMerge(projectSetting, projectConfig || {});
-    const darkMode = store.getters.app.darkMode;
+    const darkMode = store.getters["AppStore/darkMode"];
     const {
         colorWeak,
         grayMode,

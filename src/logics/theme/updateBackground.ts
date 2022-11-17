@@ -2,7 +2,7 @@
  * @Author: Mango 2859893460@qq.com
  * @Date: 2022-11-17 11:22:36
  * @LastEditors: Mango 2859893460@qq.com
- * @LastEditTime: 2022-11-17 14:18:37
+ * @LastEditTime: 2022-11-17 14:28:04
  * @FilePath: \blog_admin\src\logics\theme\updateBackground.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -24,12 +24,12 @@ const SIDER_LIGHTEN_BG_COLOR = '--sider-dark-lighten-bg-color';
 
 export function updateHeaderBgColor(color?: string) {
     const store = create();
-    const darkMode = store.getters.app.getDarkMode === ThemeEnum.DARK;
+    const darkMode = store.getters["AppStore/getDarkMode"] === ThemeEnum.DARK;
     if (!color) {
         if (darkMode) {
             color = "#151515";
         } else {
-            color = store.getters.app.getHeaderSetting
+            color = store.getters["AppStore/getHeaderSetting"]
         }
     }
 
@@ -52,12 +52,12 @@ export function updateHeaderBgColor(color?: string) {
 
 export function updateSidebarBgColor(color?: string) {
     const store = create();
-    const darkMode = store.getters.app.getDarkMode === ThemeEnum.DARK;
+    const darkMode = store.getters["AppStore/getDarkMode"] === ThemeEnum.DARK;
     if (!color) {
         if (darkMode) {
             color = "#212121"
         } else {
-            color = store.getters.app.getMenuSetting.bgColor;
+            color = store.getters["AppStore/getMenuSetting"].bgColor;
         }
     }
     setCssVar(SIDER_DARK_BG_COLOR, color);
