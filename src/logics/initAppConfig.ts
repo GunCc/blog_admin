@@ -2,7 +2,15 @@
  * @Author: Mango 2859893460@qq.com
  * @Date: 2022-11-16 17:14:49
  * @LastEditors: Mango 2859893460@qq.com
- * @LastEditTime: 2022-11-16 22:14:13
+ * @LastEditTime: 2022-11-17 14:19:35
+ * @FilePath: \blog_admin\src\logics\initAppConfig.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+/*
+ * @Author: Mango 2859893460@qq.com
+ * @Date: 2022-11-16 17:14:49
+ * @LastEditors: Mango 2859893460@qq.com
+ * @LastEditTime: 2022-11-17 11:20:41
  * @FilePath: \blog_admin\src\logics\initAppConfig.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -16,6 +24,9 @@ import { primaryColor } from "../../build/config/themeConfig";
 import { changeTheme } from "./theme"
 import { updateGrayMode } from "./theme/updateGrayMode";
 import { updateColorWeak } from "./theme/updateColorWeak";
+import { ThemeEnum } from "../enums/appEnum";
+import { getCommonStoragePrefix, getStorageShortName } from "../utils/env";
+import { updateHeaderBgColor, updateSidebarBgColor } from "./theme/updateBackground";
 
 // 初始化项目配置
 export function initAppConfigStore() {
@@ -23,7 +34,7 @@ export function initAppConfigStore() {
 
     let projectConfig: ProjectConfig = Persistent.getLocal(PROJ_CFG_KEY) as ProjectConfig;
     projectConfig = deepMerge(projectSetting, projectConfig || {});
-    const darkMode = store.getters.darkMode;
+    const darkMode = store.getters.app.darkMode;
     const {
         colorWeak,
         grayMode,
@@ -40,4 +51,39 @@ export function initAppConfigStore() {
     } catch (error) {
         console.log(error)
     }
+
+    store.commit("app/SetProjectConfig", projectConfig);
+    // 如果是黑色模式
+    if (darkMode === ThemeEnum.DARK) {
+        updateHeaderBgColor();
+        updateSidebarBgColor();
+    } else {
+        headerBgColor && updateHeaderBgColor(headerBgColor)
+        bgColor && updateSidebarBgColor(bgColor)
+    }
+
+    // init store 
+    store.dispatch("locale/initLocale")
+
+    setTimeout(() => {
+        clearObsoleteStorage()
+    }, 16)
+}
+
+
+/**
+ * @desc 该方法删除无用的一些缓存
+ */
+export function clearObsoleteStorage() {
+    const commonPrefix = getCommonStoragePrefix();
+    const shortPrefix = getStorageShortName();
+
+
+    [localStorage, sessionStorage].forEach((item: Storage) => {
+        Object.keys(item).forEach((key) => {
+            if (key && key.startsWith(commonPrefix) && !key.startsWith(shortPrefix)) {
+                item.removeItem(key)
+            }
+        })
+    })
 }

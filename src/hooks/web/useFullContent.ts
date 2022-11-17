@@ -16,7 +16,7 @@ export const useFullContent = () => {
     if (query && Reflect.has(query, "__full__")) {
       return true;
     }
-    return store.getters.getProjectConfig.fullContent
+    return store.getters.app.getProjectConfig.fullContent
   });
   return { getFullContent }
 };

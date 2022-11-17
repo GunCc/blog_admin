@@ -2,8 +2,7 @@
 import { ThemeEnum } from "@/enums/appEnum";
 import { APP_DARK_MODE_KEY_, PROJ_CFG_KEY } from "/@/enums/cacheEnum";
 import { darkMode } from "/@/settings/designSetting";
-import { MenuSetting, ProjectConfig } from "/@/types/config";
-import { VuexStore } from "/@/types/store";
+import { HeaderSetting, MenuSetting, ProjectConfig } from "/@/types/config";
 import { deepMerge } from "/@/utils";
 import { Persistent } from "/@/utils/cache/persistent";
 interface AppState {
@@ -26,6 +25,9 @@ const getters = {
   },
   getDarkMode(state: AppState): 'string' | 'dark' | string {
     return state.darkMode || localStorage.getItem(APP_DARK_MODE_KEY_) || darkMode
+  },
+  getHeaderSetting(state: AppState): HeaderSetting | undefined {
+    return state.projectConfig?.headerSetting
   }
 };
 
@@ -39,7 +41,7 @@ const mutations = {
   }
 };
 
-export default  {
+export default {
   namespaced: true,
   state,
   getters,
