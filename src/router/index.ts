@@ -12,7 +12,7 @@ const getRouteNames = (array: any[]) =>
 
 getRouteNames(basicRoutes);
 // 配置路由
-const router = createRouter({
+export const router = createRouter({
   history: createWebHistory(),
   routes: basicRoutes as unknown as RouteRecordRaw[],
 });

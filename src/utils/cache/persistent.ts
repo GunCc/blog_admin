@@ -14,6 +14,7 @@ interface BasicStore {
 }
 
 
+export type BasicKeys = keyof BasicStore;
 type LocalStore = BasicStore;
 type SessionStore = BasicStore;
 
@@ -39,7 +40,7 @@ export class Persistent {
         return localMemory.get(key)?.value as Nullable<T>;
     }
 
-    static setLocal(key: LocalKeys, value: LocalStore[LocalKeys], immediate?: false): void {
+    static setLocal(key: LocalKeys, value: LocalStore[LocalKeys], immediate?: boolean): void {
         localMemory.set(key, toRaw(value));
         immediate && ls.set(APP_LOCAL_CACHE_KEY, localMemory.getCache);
     }

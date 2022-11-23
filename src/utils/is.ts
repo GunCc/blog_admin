@@ -33,3 +33,13 @@ export function isNullOrUnDef(val: unknown): val is null | undefined {
 export function isObject(val: any): val is Record<any, any> {
   return val !== null && is(val, 'Object')
 }
+
+// 是否为方法
+export function isFunction(val: unknown): val is Function {
+  return typeof val === 'function';
+}
+
+// 是否为字符串
+export function isString(val: unknown): val is string {
+  return is(val, "String");
+}

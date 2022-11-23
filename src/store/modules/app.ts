@@ -5,9 +5,9 @@ import { darkMode } from "/@/settings/designSetting";
 import { HeaderSetting, MenuSetting, ProjectConfig } from "/@/types/config";
 import { deepMerge } from "/@/utils";
 import { Persistent } from "/@/utils/cache/persistent";
-interface AppState {
+export type AppState = {
   darkMode?: ThemeEnum;
-  projectConfig: ProjectConfig | null;
+  projectConfig: ProjectConfig;
 }
 
 const state = () =>
@@ -20,8 +20,8 @@ const getters = {
   getProjectConfig(state: AppState): ProjectConfig {
     return state.projectConfig || ({} as ProjectConfig);
   },
-  getMenuSetting(state: AppState): MenuSetting | undefined {
-    return state.projectConfig?.menuSetting;
+  getMenuSetting(state: AppState): MenuSetting {
+    return state.projectConfig.menuSetting;
   },
   getDarkMode(state: AppState): 'string' | 'dark' | string {
     return state.darkMode || localStorage.getItem(APP_DARK_MODE_KEY_) || darkMode

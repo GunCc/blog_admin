@@ -15,7 +15,15 @@
             <slot></slot>
         </div>
 
-        
+        <PageFooter v-if="getShowFooter" ref="footerRef">
+            <template #left>
+                <slot name="leftFooter"></slot>
+            </template>
+            <template #right>
+                <slot name="rightFooter"></slot>
+            </template>
+        </PageFooter>
+
     </div>
 </template>
 <script  lang='ts'>

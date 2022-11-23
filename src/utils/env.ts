@@ -61,3 +61,10 @@ export function getAppEnvConfig() {
 export function getEnv(): string {
   return import.meta.env.MODE;
 }
+
+
+// 判断是否生产模式
+
+export function isProdMode(): boolean {
+  return import.meta.env.PROD
+}

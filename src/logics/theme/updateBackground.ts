@@ -2,13 +2,13 @@
  * @Author: Mango 2859893460@qq.com
  * @Date: 2022-11-17 11:22:36
  * @LastEditors: Mango 2859893460@qq.com
- * @LastEditTime: 2022-11-17 14:28:04
+ * @LastEditTime: 2022-11-23 11:06:44
  * @FilePath: \blog_admin\src\logics\theme\updateBackground.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import { setCssVar } from "./utils";
 import { ThemeEnum } from "/@/enums/appEnum";
-import { create } from "/@/store";
+import { useStore } from "/@/store";
 import { colorIsDark, darken, lighten } from "/@/utils/color";
 
 // 头部样式名
@@ -23,13 +23,13 @@ const SIDER_LIGHTEN_BG_COLOR = '--sider-dark-lighten-bg-color';
 
 
 export function updateHeaderBgColor(color?: string) {
-    const store = create();
+    const store = useStore();
     const darkMode = store.getters["AppStore/getDarkMode"] === ThemeEnum.DARK;
     if (!color) {
         if (darkMode) {
             color = "#151515";
         } else {
-            color = store.getters["AppStore/getHeaderSetting"]
+            color = store.getters["AppStore/getHeaderSetting"]?.bgColor
         }
     }
 
@@ -39,7 +39,7 @@ export function updateHeaderBgColor(color?: string) {
     setCssVar(HEADER_MENU_ACTIVE_BG_COLOR_VAR, hoverColor)
 
     const isDark = colorIsDark(color!);
-    store.commit("app/SetProjectConfig", {
+    store.commit("AppStore/SetProjectConfig", {
         headerSetting: {
             theme: isDark || darkMode ? ThemeEnum.DARK : ThemeEnum.LIGHT
         }
@@ -51,20 +51,20 @@ export function updateHeaderBgColor(color?: string) {
  */
 
 export function updateSidebarBgColor(color?: string) {
-    const store = create();
+    const store = useStore();
     const darkMode = store.getters["AppStore/getDarkMode"] === ThemeEnum.DARK;
     if (!color) {
         if (darkMode) {
             color = "#212121"
         } else {
-            color = store.getters["AppStore/getMenuSetting"].bgColor;
+            color = store.getters["App/getMenuSetting"].bgColor;
         }
     }
     setCssVar(SIDER_DARK_BG_COLOR, color);
     setCssVar(SIDER_DARK_DARKEN_BG_COLOR, darken(color!, 6));
     setCssVar(SIDER_LIGHTEN_BG_COLOR, lighten(color!, 5));
     const isLight = ['#fff', '#ffffff'].includes(color!.toLowerCase());
-    store.commit("app/SetProjectConfig", {
+    store.commit("AppStore/SetProjectConfig", {
         menuSetting: {
             theme: isLight && !darkMode ? ThemeEnum.LIGHT : ThemeEnum.DARK
         }
