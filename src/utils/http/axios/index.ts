@@ -2,34 +2,11 @@
  * @Author: Mango 2859893460@qq.com
  * @Date: 2022-11-20 15:15:12
  * @LastEditors: Mango 2859893460@qq.com
- * @LastEditTime: 2022-11-23 11:04:29
+ * @LastEditTime: 2022-11-24 11:44:05
  * @FilePath: \blog_admin\src\utils\http\axios\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-/*
- * @Author: Mango 2859893460@qq.com
- * @Date: 2022-11-20 15:15:12
- * @LastEditors: Mango 2859893460@qq.com
- * @LastEditTime: 2022-11-22 22:39:37
- * @FilePath: \blog_admin\src\utils\http\axios\index.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-/*
- * @Author: Mango 2859893460@qq.com
- * @Date: 2022-11-20 15:15:12
- * @LastEditors: Mango 2859893460@qq.com
- * @LastEditTime: 2022-11-22 22:09:50
- * @FilePath: \blog_admin\src\utils\http\axios\index.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-/*
- * @Author: Mango 2859893460@qq.com
- * @Date: 2022-11-20 15:15:12
- * @LastEditors: Mango 2859893460@qq.com
- * @LastEditTime: 2022-11-22 22:09:03
- * @FilePath: \blog_admin\src\utils\http\axios\index.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
+
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { clone } from "vue-types/dist/utils";
 import { deepMerge, setObjToUrlParams } from "../..";
@@ -38,12 +15,17 @@ import { AxiosTransform, CreateAxiosOptions } from "./axiosTransform";
 import { ContentTypeEnum, RequestEnum, ResultEnum } from "/@/enums/httpEnum";
 import { Result, RequestOptions } from "@/types/axios"
 import { useI18n } from "vue-i18n";
-import { useStore } from "/@/store";
 import { useMessage } from "/@/hooks/web/useMessage";
 import { isString } from "../../is";
 import { formatRequestDate, joinTimestamp } from "./helper";
 import { getToken } from "../../auth";
+import { useStore } from "/@/store";
+import { checkStatus } from "./checkStatus";
+import { AxiosRetry } from "./axiosRetry"
+import { useGlobSetting } from "/@/settings";
 
+const globSetting = useGlobSetting();
+const urlPrefix = globSetting.urlPrefix
 const { createErrorModal, createMessage } = useMessage();
 
 function createAxios(opt?: Partial<CreateAxiosOptions>) {
@@ -54,7 +36,38 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
                 authenticationScheme: '',
                 timeout: 10 * 1000,
                 headers: { 'Content-Type': ContentTypeEnum.JSON },
-                transform: clone(transform)
+                transform: clone(transform),
+                // 配置项，下面的选项都可以在独立的接口请求中覆盖
+                requestOptions: {
+                    // 默认把 prefix，添加到url
+                    joinPrefix: true,
+                    // 是否返回原生响应头
+                    isReturnNativeResponse: false,
+                    // 对返回数据镜像处理
+                    isTransformResponse: true,
+                    // post 请求讲参数添加到url
+                    joinParamsToUrl: false,
+                    // 格式化提交参数时间
+                    formatDate: true,
+                    // 小时提示类型
+                    errorMessageMode: 'message',
+                    // 接口地址
+                    apiUrl: globSetting.apiUrl,
+                    // 接口拼接地址
+                    urlPrefix: urlPrefix,
+                    // 是否加入时间戳
+                    joinTime: true,
+                    // 忽略重复请求
+                    ignoreCancelToken: true,
+                    // 是否携带token
+                    withToken: true,
+                    retryRequest: {
+                        isOpenRetry: true,
+                        count: 5,
+                        waitTime: 100
+                    }
+                } as RequestOptions,
+
             },
             opt || {},
         )
@@ -184,6 +197,40 @@ const transform: AxiosTransform = {
     responseInterceptorsCatch: (axiosInstance: AxiosResponse, error: any) => {
 
         const store = useStore();
+        store.commit("LogStore/addAjaxErrorInfo", error);
+        const { response, code, message, config } = error || {};
+        const errorMessageMode = config?.requestOptions?.errorMessageMode || 'none';
+        const msg: string = response?.data?.error?.message ?? '';
+        const err: string = error?.toString?.() ?? '';
+        let errMessage = '';
+        try {
+            if (code === "ECONNABORTED" && message.indexOf("timeout") !== -1) {
+                errMessage = "超时啦"
+            }
+            if (err.includes("Network Error")) {
+                errMessage = "网络错误"
+            }
+            if (errMessage) {
+                if (errorMessageMode === 'modal') {
+                    createErrorModal({ title: "错误", content: errMessage })
+                } else if (errorMessageMode === 'message') {
+                    createMessage.error(errMessage)
+                }
+                return Promise.reject(error)
+            }
+        } catch (error) {
+            throw new Error(error as unknown as string)
+        }
+
+        checkStatus(error?.response?.status, msg, errorMessageMode);
+
+        // 添加自动重试机制 保险起见 只对GET有效
+        const retryRequest = new AxiosRetry()
+        // 是否重试请求
+        const { isOpenRetry } = config.requestOptions.retryRequest
+        // @ts-ignore
+        config.method?.toUpperCase() === RequestEnum.GET && isOpenRetry && retryRequest.retry(axiosInstance, error);
+        return Promise.reject(error)
     },
 
 }

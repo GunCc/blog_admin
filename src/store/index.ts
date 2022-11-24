@@ -3,6 +3,7 @@ import type { App, InjectionKey } from "vue";
 import AppStore, { AppState } from "./modules/app";
 import LocaleStore, { LocaleState } from "./modules/locale";
 import UserStore, { UserState } from "./modules/user";
+import LogStore, { LogState } from "./modules/log";
 import { CommonStore } from "./vuex_ts";
 
 // 定义根级 state 类型
@@ -10,6 +11,7 @@ export type RootState = {
   AppState: AppState,
   LocaleState: LocaleState,
   UserState: UserState,
+  LogState: LogState,
 }
 
 // 模块聚合
@@ -17,6 +19,7 @@ export const modules = {
   AppStore,
   LocaleStore,
   UserStore,
+  LogStore
 }
 
 
