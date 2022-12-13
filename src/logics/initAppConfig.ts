@@ -26,6 +26,7 @@ export function initAppConfigStore() {
 
     let projectConfig: ProjectConfig = Persistent.getLocal(PROJ_CFG_KEY) as ProjectConfig;
     projectConfig = deepMerge(projectSetting, projectConfig || {});
+    console.log(store)
     const darkMode = store.getters["AppStore/darkMode"];
     const {
         colorWeak,

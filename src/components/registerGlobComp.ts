@@ -1,7 +1,9 @@
 import type { App } from "vue";
-// import { Layout } from "ant-design-vue";
+import { RegisterAntdIcon } from "./Icon";
+import { Layout, Input } from "ant-design-vue";
 
 
 export function registerGlobComp(app: App) {
-  // app.use(Layout);
+  app.use(Layout).use(Input);
+  RegisterAntdIcon(app)
 }

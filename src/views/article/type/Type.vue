@@ -15,10 +15,11 @@
 <script setup lang='ts'>
 import { PageWrapper } from "@/components/Page"
 import { BasicTable } from '@/components/Table';
+import { getTypeList } from "/@/api/v1/article/type";
 import { useTable } from "/@/components/Table/hooks/useTable";
 const [registerTable, { reload }] = useTable({
     title: "测试表格",
-    api: '',
+    api: getTypeList,
     pagination: { pageSize: 10 },
 })
 // function handleReloadCurrent() {

@@ -33,7 +33,7 @@ export const store = createStore<RootState>({
 // 调用useStore
 export function useStore(): CommonStore {
   // @ts-ignore
-  return baseUseStore(key)
+  return store
 }
 
 // 调用vuex

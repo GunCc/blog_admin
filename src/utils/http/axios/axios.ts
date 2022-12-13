@@ -136,20 +136,20 @@ export class VAxios {
     }
 
 
-    get<T = any>(config: AxiosRequestConfig, options: RequestOptions): Promise<T> {
+    get<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
         return this.request({ ...config, method: 'GET' }, options);
     }
-    post<T = any>(config: AxiosRequestConfig, options: RequestOptions): Promise<T> {
+    post<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
         return this.request({ ...config, method: 'POST' }, options);
     }
-    put<T = any>(config: AxiosRequestConfig, options: RequestOptions): Promise<T> {
+    put<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
         return this.request({ ...config, method: 'PUT' }, options);
     }
-    delete<T = any>(config: AxiosRequestConfig, options: RequestOptions): Promise<T> {
+    delete<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
         return this.request({ ...config, method: 'DELETE' }, options);
     }
 
-    request<T>(config: AxiosRequestConfig, options: RequestOptions): Promise<T> {
+    request<T>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
         let conf: CreateAxiosOptions = cloneDeep(config);
         const transform = this.getTransform();
 

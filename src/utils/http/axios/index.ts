@@ -1,14 +1,5 @@
-/*
- * @Author: Mango 2859893460@qq.com
- * @Date: 2022-11-20 15:15:12
- * @LastEditors: Mango 2859893460@qq.com
- * @LastEditTime: 2022-11-24 11:44:05
- * @FilePath: \blog_admin\src\utils\http\axios\index.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
 
 import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { clone } from "vue-types/dist/utils";
 import { deepMerge, setObjToUrlParams } from "../..";
 import { VAxios } from "./axios";
 import { AxiosTransform, CreateAxiosOptions } from "./axiosTransform";
@@ -23,6 +14,7 @@ import { useStore } from "/@/store";
 import { checkStatus } from "./checkStatus";
 import { AxiosRetry } from "./axiosRetry"
 import { useGlobSetting } from "/@/settings";
+import { clone } from "lodash-es"
 
 const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix
@@ -40,7 +32,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
                 // 配置项，下面的选项都可以在独立的接口请求中覆盖
                 requestOptions: {
                     // 默认把 prefix，添加到url
-                    joinPrefix: true,
+                    joinPrefix: false,
                     // 是否返回原生响应头
                     isReturnNativeResponse: false,
                     // 对返回数据镜像处理
@@ -166,6 +158,7 @@ const transform: AxiosTransform = {
                     config.params = undefined;
                 }
             }
+            // debugger
             if (joinParamsToUrl) {
                 config.url = setObjToUrlParams(
                     config.url as string,
@@ -173,8 +166,8 @@ const transform: AxiosTransform = {
                 )
             } else {
                 // 兼容restful 风格
-                config.url = config.url + params;
-                config.params + undefined
+                // config.url = config.url + params;
+                // config.params + undefined
             }
         }
         return config;
