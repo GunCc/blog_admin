@@ -17,9 +17,12 @@
 
 import { ActionContext } from "vuex";
 import { RootState } from "..";
+import { GetUserInfoModel, LoginModel } from "/@/api/v1/sys/model/userModal";
+import { loginApi } from "/@/api/v1/sys/user";
 import { TOKEN_KEY, USER_INFO_KEY } from "/@/enums/cacheEnum";
 import { PageEnum } from "/@/enums/pageEnum";
 import { router } from "/@/router";
+import { ErrorMessageMode } from "/@/types/axios";
 import { UserInfo } from "/@/types/store";
 import { getAuthCache, setAuthCache } from "/@/utils/auth";
 
@@ -60,7 +63,7 @@ const mutations = {
         state.userInfo = data;
         state.lastUpdateTime = new Date().getTime();
         setAuthCache(USER_INFO_KEY, data)
-    }
+    },
 };
 
 const actions = {
@@ -76,7 +79,44 @@ const actions = {
         commit("SetSessionTimeout", false)
         commit("SetUserInfo", null)
         goLogin && router.push(PageEnum.BASE_LOGIN)
-    }
+    },
+    async login({ commit, getters, dispatch }: ActionContext<UserState, RootState>, loginForm: LoginModel & { goHome?: boolean; mode?: ErrorMessageMode }): Promise<GetUserInfoModel | null> {
+        try {
+            debugger
+            const { goHome = true, mode, ...loginParams } = loginForm;
+            const data = await loginApi(loginParams, mode)
+            const { token, user } = data;
+            commit("SetToken", token);
+            dispatch("afterLoginAction", goHome)
+            return user as GetUserInfoModel
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    },
+    // 登陆后的请求
+    async afterLoginAction({ getters, state, dispatch, commit }: ActionContext<UserState, RootState>, goHome?: boolean): Promise<GetUserInfoModel | null> {
+        try {
+            console.log(getters.getToken,getters)
+            if (!getters.getToken) return null;
+            // await dispatch("getUserInfoAction");
+            const sessionTimeout = state.sessionTimeout;
+            if (sessionTimeout) {
+                commit("SetSessionTimeout", false)
+            } else {
+            }
+            goHome && (await router.replace(PageEnum.BASE_HOME))
+            debugger
+            return null;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    },
+    // 获取用户信息
+    async getUserInfoAction() {
+        // return Promise(() => {
+
+        // })
+    },
 }
 
 export default {

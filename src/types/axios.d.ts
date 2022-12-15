@@ -49,8 +49,8 @@ export interface RetryRequest {
 export interface Result<T = any> {
     code: number;
     type: 'success' | 'error' | 'warning';
-    message: string;
-    result: T
+    msg: string;
+    Data: T
 }
 
 // multipart/form-data：文件上床

@@ -15,6 +15,7 @@ import { checkStatus } from "./checkStatus";
 import { AxiosRetry } from "./axiosRetry"
 import { useGlobSetting } from "/@/settings";
 import { clone } from "lodash-es"
+import qs from "qs"
 
 const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix
@@ -71,7 +72,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
 const transform: AxiosTransform = {
     // 处理响应数据，如果数据不是预期格式，可以直接抛出错误
     transformResponseHook: (res: AxiosResponse<Result>, options: RequestOptions) => {
-        const { t } = useI18n();
+        // const { t } = useI18n();
         const { isReturnNativeResponse, isTransformResponse } = options;
         // 是否返回原生响应头 比如：需要获取响应头时使用该属性
         if (isReturnNativeResponse) {
@@ -89,11 +90,11 @@ const transform: AxiosTransform = {
             throw new Error("HTTP 请求没有返回数据")
         }
 
-        const { code, result, message } = data;
+        const { code, Data, msg } = data;
 
         const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS
         if (hasSuccess) {
-            return result
+            return Data
         }
         // 如果不希望中断当前请求，请return数据，否则直接抛出异常即可
         let timeoutMsg = '';
@@ -105,8 +106,8 @@ const transform: AxiosTransform = {
                 store.dispatch("UserStore/logout", true)
                 break;
             default:
-                if (message) {
-                    timeoutMsg = message
+                if (msg) {
+                    timeoutMsg = msg
                 }
         }
         // errorMessageMode=‘modal’的时候会显示modal错误弹窗，而不是消息提示，用于一些比较重要的错误
@@ -177,7 +178,7 @@ const transform: AxiosTransform = {
         const token = getToken();
         if (token && (config as Recordable)?.requestOptions?.widthToken !== false) {
             // jwt token
-            (config as Recordable).headers.Authorization = options.authenticationScheme
+            (config as Recordable).headers.token = options.authenticationScheme
                 ? `${options.authenticationScheme} ${token}` : token;
         }
         return config
