@@ -5,6 +5,7 @@ import LocaleStore, { LocaleState } from "./modules/locale";
 import UserStore, { UserState } from "./modules/user";
 import LogStore, { LogState } from "./modules/log";
 import { CommonStore } from "./vuex_ts";
+import PermStore, { PermissionState } from "./modules/permissionStore";
 
 // 定义根级 state 类型
 export type RootState = {
@@ -12,6 +13,7 @@ export type RootState = {
   LocaleState: LocaleState,
   UserState: UserState,
   LogState: LogState,
+  PermStata: PermissionState
 }
 
 // 模块聚合
@@ -19,7 +21,8 @@ export const modules = {
   AppStore,
   LocaleStore,
   UserStore,
-  LogStore
+  LogStore,
+  PermStore,
 }
 
 

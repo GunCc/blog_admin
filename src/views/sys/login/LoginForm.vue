@@ -65,10 +65,9 @@ const handleLogin = async () => {
     try {
         data.buttonLoading = true;
         const store = useStore();
-        const { validForm } = useFormValid(formRef)
-        console.log(await validForm())
-        console.log(LoginForm)
-        store.dispatch("UserStore/login", unref(LoginForm))
+        await store.dispatch("UserStore/login", unref(LoginForm))
+
+    } catch (error) {
 
     } finally {
         data.buttonLoading = false

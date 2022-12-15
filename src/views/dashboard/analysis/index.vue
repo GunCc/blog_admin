@@ -1,5 +1,6 @@
 <template>
-    <div class="p-4">
+    <div class="p-4" :loading="true">
+        1
         <GrowCard />
     </div>
 </template>

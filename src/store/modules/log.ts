@@ -1,15 +1,6 @@
-/*
- * @Author: Mango 2859893460@qq.com
- * @Date: 2022-11-23 11:16:08
- * @LastEditors: Mango 2859893460@qq.com
- * @LastEditTime: 2022-11-24 11:06:57
- * @FilePath: \blog_admin\src\store\modules\log.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
+
 import projectSetting from "@/settings/projectSetting"
 import dayjs from "dayjs"
-import { Store } from "vuex"
-import { CommonStore } from "../vuex_ts"
 import { ErrorTypeEnum } from "/@/enums/exceptionEnum"
 import { ErrorLogInfo } from "/@/types/store"
 import { formatToDateTime } from "/@/utils/dateUtil"

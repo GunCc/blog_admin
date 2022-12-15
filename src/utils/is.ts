@@ -43,3 +43,10 @@ export function isFunction(val: unknown): val is Function {
 export function isString(val: unknown): val is string {
   return is(val, "String");
 }
+
+// 是否为一个地址
+export function isUrl(path: string): boolean {
+  const reg =
+    /^(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?(\/#\/)?(?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/;
+  return reg.test(path);
+}

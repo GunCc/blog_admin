@@ -1,7 +1,8 @@
 <template>
     <Sider v-show="showClassSideBarRef">
         <div class="logo" />
-        <Menu mode="inline" v-model:selectedKeys="selectedKeys2" v-model:openKeys="openKeys"
+
+        <!-- <Menu mode="inline" v-model:selectedKeys="selectedKeys2" v-model:openKeys="openKeys"
             :style="{ height: '100%', borderRight: 0 }">
             <SubMenu key="sub1">
                 <template #title>
@@ -15,21 +16,20 @@
                 <MenuItem key="3">option3</MenuItem>
                 <MenuItem key="4">option4</MenuItem>
             </SubMenu>
-        </Menu>
+        </Menu> -->
+        <LayoutMenu></LayoutMenu>
     </Sider>
 
 </template>
 
 <script lang="ts" setup name="SiderWrapper">
-import { Layout, Menu, SubMenu, MenuItem } from "ant-design-vue"
-import { computed, ref } from "vue";
+import { Layout } from "ant-design-vue"
+import { computed } from "vue";
+import LayoutMenu from "../menu/index.vue"
 const { Sider } = Layout;
 
-const selectedKeys2 = ref<string[]>(['2'])
-const openKeys = ref<string[]>(['sub2'])
 
 const showClassSideBarRef = computed(() => {
-    // return unref()
     return true
 })
 </script>
