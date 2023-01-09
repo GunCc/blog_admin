@@ -25,7 +25,7 @@ export function useMenuSetting() {
             (unref(getShowMenu) && unref(getMenuMode) !== MenuModeEnum.HORIZONTAL && !unref(fullContent))
         );
     });
-
+    console.log('store.getters["AppStore/getMenuSetting"]',store.getters["AppStore/getMenuSetting"])
     const getCollapsed = computed(() => store.getters["AppStore/getMenuSetting"]?.collapsed);
     const getMenuType = computed(() => store.getters["AppStore/getMenuSetting"]?.type);
     const getMenuMode = computed(() => store.getters["AppStore/getMenuSetting"]?.mode);

@@ -39,3 +39,8 @@ declare interface ViteEnv {
     // 生成UI
     VITE_GENERATE_UI: string;
 }
+
+
+declare type TimeoutHandle = ReturnType<typeof setTimeout>;
+
+declare type TargetContext = "_self" | '_blank'

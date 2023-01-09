@@ -68,6 +68,7 @@ export function useSplitMenu(splitType: Ref<MenuSplitTypeEnum>) {
 
     // 生成菜单
     async function genMenus() {
+        debugger
         // 默认模式
         if (unref(normalType)) {
             menusRef.value = await getMenus();

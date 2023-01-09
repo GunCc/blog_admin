@@ -8,7 +8,7 @@ export enum TriggerEnum {
   HEADER = "HEADER",
 }
 
-// 蔡澜类型
+// 菜单类型
 export enum MenuTypeEnum {
   SIDEBAR = "sidebar",
   MIX_SIDEBAR = "min-sidebar",

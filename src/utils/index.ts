@@ -55,3 +55,16 @@ export function getDynamicProps<T, U>(props: T): Partial<U> {
     })
     return ret as Partial<U>
 }
+
+// 打开某个界面
+export function openWindow(
+    url: string,
+    opt?: { target?: TargetContext | string; noopener?: boolean; noreferrer?: boolean },
+
+) {
+    const { target = "__blank", noopener = true, noreferrer = true } = opt || {};
+    const feature: string[] = [];
+    noopener && feature.push("noppener=yes")
+    noreferrer && feature.push("noreferrer=yes");
+    window.open(url, target, feature.join(','))
+}

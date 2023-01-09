@@ -47,7 +47,9 @@ export async function getChildrenMenus(parentPath: string) {
 
 // 获取菜单
 export const getMenus = async (): Promise<Menu[]> => {
+    debugger
     const menus = await getAsyncMenus();
+    console.log(menus)
     if (isRoleMode()) {
         const routes = router.getRoutes();
         return filter(menus, basicFilter(routes))
@@ -72,6 +74,7 @@ const staticMenus: Menu[] = [];
 // 获取异步菜单
 async function getAsyncMenus() {
     const store = useStore();
+    console.log('store.getters["PermStore/getBackMenuList"]',store.getters["PermStore/getBackMenuList"])
     if (isBackMode()) {
         return store.getters["PermStore/getBackMenuList"].filter((item) => !item.meta?.hideMenu && !item.hideMenu);
     }
